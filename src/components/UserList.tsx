@@ -3,12 +3,24 @@ import styled from 'styled-components'
 
 import User from './User'
 
-const UserList: React.FC = () => {
+type Props = {
+  users: Array<object>
+}
+
+const UserList: React.FC<Props> = ({ users }) => {
+  const renderUserList = (users: Array<object>) => {
+    return users.map((user: any, index: number) => {
+      return (
+        <StyledUserLi key={ index }>
+        <User user={ user } />
+      </StyledUserLi>
+      )
+    })
+  }
+
   return (
     <StyledUserList>
-      <StyledUserLi>
-        <User />
-      </StyledUserLi>
+      { renderUserList(users) }
     </StyledUserList>
   )
 }

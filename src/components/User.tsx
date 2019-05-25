@@ -1,30 +1,59 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import styled from 'styled-components'
 
-const User: React.FC = () => {
+interface IUser {
+  name: {
+    title: string,
+    first: string,
+    last: string
+  },
+  picture: {
+    large: string
+  }
+  email: string,
+  phone: string,
+  gender: string,
+  location: {
+    city: string,
+    state: string
+  }
+}
+
+type Props = {
+  user: IUser
+}
+
+const User: React.FC<Props> = ({ user }) => {
+  const fullName = useMemo(() => `${user.name.title} ${user.name.first} ${user.name.last}`, [user.name])
+
   return (
     <StyledWrapper>
-      <StyledImg src="https://placehold.jp/150x150.png" alt="" />
-      <StyleName>テスト</StyleName>
-      
+      <StyledImg src={ user.picture.large } alt="" />
+      <StyleName>{ fullName }</StyleName>
+
+      <StyledDl>
+        <StyledDt>性別</StyledDt>
+        <dd>{ user.gender }</dd>
+      </StyledDl>
+
       <StyledDl>
         <StyledDt>メール</StyledDt>
-        <dd>tsukasamurashige@gmail.com</dd>
+        <dd>{ user.email }</dd>
       </StyledDl>
       
       <StyledDl>
         <StyledDt>電話</StyledDt>
-        <dd>090-1111-1111</dd>
+        <dd>{ user.phone }</dd>
       </StyledDl>
       
       <StyledDl>
         <StyledDt>町</StyledDt>
-        <dd>setagaya</dd>
+        <dd>{ user.location.city }</dd>
       </StyledDl>
       
       <StyledDl>
         <StyledDt>州</StyledDt>
-        <dd></dd>
+        <dd>{ user.location.state }</dd>
       </StyledDl>
     </StyledWrapper>
   )
