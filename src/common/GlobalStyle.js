@@ -1,7 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
 
-import Colors from '../const/colors'
-
 const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
@@ -40,7 +38,7 @@ const GlobalStyle = createGlobalStyle`
   
   body {
     font-size: 1.6rem;
-    color: ${Colors.TEXT};
+    color: '#222';
   }
   
   body.is-locked {
@@ -74,7 +72,7 @@ const GlobalStyle = createGlobalStyle`
   button, input, select, textarea {
     font-family: inherit;
     font-size: 100%;
-    color: ${Colors.TEXT};
+    color: '#222';
   }
   
   input, select {
