@@ -24,12 +24,16 @@ const App: React.FC = () => {
     const getUsers = async () => {
       setLoadedStatus(false)
 
-      const result = await axios.get('https://randomuser.me/api/', {
-        params: queries
-      })
+      try {
+        const result = await axios.get('https://randomuser.me/api/', {
+          params: queries
+        })
 
-      setUsers(result.data.results)
-      setLoadedStatus(true)
+        setUsers(result.data.results)
+        setLoadedStatus(true)
+      } catch(e) {
+        alert('アプリケーションで問題が発生しています')
+      } 
     }
 
     getUsers()
