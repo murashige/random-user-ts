@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
+import ReactPaginate from 'react-paginate'
 
 import UserList from './components/UserList'
 import { GENDERS } from './const/sortOptions'
@@ -13,8 +14,9 @@ interface IGender {
 const App: React.FC = () => {
   const [users, setUsers] = useState([])
   const [queries, setQeries] = useState({
-    results: 100,
-    gender: ''
+    results: 20,
+    gender: '',
+    page: 0
   })
 
   useEffect(() => {
@@ -24,18 +26,23 @@ const App: React.FC = () => {
       })
       setUsers(result.data.results)
     }
-    
+
     getUsers()
   }, [queries])
 
   console.log('users', users, 'queries', queries)
 
-
-
   const onChangeGender = (gender: string) => {
     setQeries({
       ...queries,
       gender
+    })
+  }
+
+  const onPageChange = (selected: number) => {
+    setQeries({
+      ...queries,
+      page: selected
     })
   }
 
@@ -61,14 +68,27 @@ const App: React.FC = () => {
           { renderGenderOptions(GENDERS) }
         </select>
       </StyledSortContent>
-      { renderUserList(users) }
+
+      <StyledUserListWrapper>
+        { renderUserList(users) }
+      </StyledUserListWrapper>
+      
+      <StyledPaginateWrapper>
+        <ReactPaginate
+          pageCount={ 20 }
+          pageRangeDisplayed={ 5 }
+          marginPagesDisplayed={ 1 }
+          containerClassName="paginate-container"
+          onPageChange={ (selected) => onPageChange(selected.selected) }
+        />
+      </StyledPaginateWrapper>
     </StyledContainer>
   )
 }
 
 const StyledContainer = styled.div`
   width: 100%;
-  padding: 15px;
+  padding: 30px 15px 50px;
 `
 
 const StyledSortContent = styled.div`
@@ -76,6 +96,33 @@ const StyledSortContent = styled.div`
   align-items: center;
   margin-bottom: 25px;
   padding: 0 15px;
+`
+
+const StyledUserListWrapper = styled.div`
+  margin-bottom: 20px;
+`
+
+const StyledPaginateWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  .paginate-container {
+    display: inline-flex;
+    align-items: center;
+    padding: 15px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+  }
+  li {
+    margin: 0 12px;
+  }
+  .selected a {
+    color: deepskyblue;
+    pointer-events: none;
+  }
+  .disabled a {
+    color: #ccc;
+    pointer-events: none;
+  }
 `
 
 export default App
