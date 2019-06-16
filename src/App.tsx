@@ -39,7 +39,8 @@ const App: React.FC = () => {
   const onChangeGender = (gender: string) => {
     setQeries({
       ...queries,
-      gender
+      gender,
+      page: 0
     })
   }
 
@@ -85,6 +86,7 @@ const App: React.FC = () => {
           pageRangeDisplayed={ 5 }
           marginPagesDisplayed={ 1 }
           containerClassName="paginate-container"
+          forcePage={ queries.page }
           onPageChange={ (selected) => onPageChange(selected.selected) }
         />
       </StyledPaginateWrapper>
