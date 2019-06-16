@@ -18,13 +18,17 @@ const App: React.FC = () => {
     gender: '',
     page: 0
   })
+  const [loadedStatus, setLoadedStatus] = useState(false)
 
   useEffect(() => {
     const getUsers = async () => {
+      setLoadedStatus(false)
+
       const result = await axios.get('https://randomuser.me/api/', {
         params: queries
       })
       setUsers(result.data.results)
+      setLoadedStatus(true)
     }
 
     getUsers()
@@ -51,12 +55,14 @@ const App: React.FC = () => {
   }
 
   const renderUserList = (users: Array<object>) => {
-    const isLoaded = users.length > 0
+    const hasUsers = users.length > 0
 
-    if(isLoaded) {
-      return <UserList users={ users } />
+    if(!loadedStatus) {
+      return <StyledLoadingImg src="loading.svg" alt="" />
+    } else if(!hasUsers) {
+      return <p>検索した条件のユーザーはいません</p>
     } else {
-      return ''
+      return <UserList users={ users } />
     }
   }
 
@@ -99,7 +105,15 @@ const StyledSortContent = styled.div`
 `
 
 const StyledUserListWrapper = styled.div`
+  position: relative;
+  min-height: calc(100vh - 99px);
   margin-bottom: 20px;
+`
+
+const StyledLoadingImg = styled.img`
+  position: absolute;
+  left: 50%;
+  top: 50%;
 `
 
 const StyledPaginateWrapper = styled.div`
