@@ -27,14 +27,13 @@ const App: React.FC = () => {
       const result = await axios.get('https://randomuser.me/api/', {
         params: queries
       })
+
       setUsers(result.data.results)
       setLoadedStatus(true)
     }
 
     getUsers()
   }, [queries])
-
-  console.log('users', users, 'queries', queries)
 
   const onChangeGender = (gender: string) => {
     setQeries({

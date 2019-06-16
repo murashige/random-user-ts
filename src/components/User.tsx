@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react'
 import styled from 'styled-components'
 
+import ImageWithLoading from './ImageWithLoading'
+
 interface IUser {
   name: {
     title: string,
@@ -28,7 +30,7 @@ const User: React.FC<Props> = ({ user }) => {
 
   return (
     <StyledWrapper>
-      <StyledImg src={ user.picture.large } alt="" />
+      <ImageWithLoading src={ user.picture.large } />
       <StyleName>{ fullName }</StyleName>
 
       <StyledDl>
@@ -61,11 +63,6 @@ const User: React.FC<Props> = ({ user }) => {
 
 const StyledWrapper= styled.div`
   width: 100%;
-`
-
-const StyledImg = styled.img`
-  width: 100%;
-  margin-bottom: 10px;
 `
 
 const StyleName = styled.p`
